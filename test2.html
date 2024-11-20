@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحذير من الروابط المجهولة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+        .warning {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>يا هلا والله انا عبدالعزيز</h1>
+        <p>عندي لعبة بسيطة ماراح تاخذ منك دقيقتين وش رايك تلعبها؟</p>
+        <button onclick="simulateHack()">حلو ذلحين اضغط هنا</button>
+        <div id="hack-message" class="hidden">
+            <h2 class="warning">اووووبا وصلت لمعلومات جهازك في اقل من ثانية :)</h2>
+            <p>تم الحصول على جميع بياناتك وبيانات جهازك.</p>
+            <div id="device-info"></div>
+            <p id="final-message" class="hidden warning">
+                هذه خدعة بسيطة ولكن حقيقية وبمعلومات صحيحة وذلك للتنويه عن مخاطر الروابط المجهولة.
+                حاب أذكرك أن دولتنا الغالية عندها أكثر من أربع جهات فقط متخصصة في الأمن السيبراني ووصلت تكلفته لأكثر من 14 مليار ريال سعودي.
+                كل هذا عشان تحمي بياناتك، لذلك خلك نبيه وحريص ولا تدخل أي رابط مشبوه.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        async function simulateHack() {
+            const hackMessage = document.getElementById("hack-message");
+            const deviceInfo = document.getElementById("device-info");
+            const finalMessage = document.getElementById("final-message");
+
+            // إظهار رسالة الاختراق
+            hackMessage.classList.remove("hidden");
+
+            // الحصول على بيانات الجهاز
+            const userAgent = navigator.userAgent;
+            const platform = navigator.platform;
+            const language = navigator.language;
+
+            // جلب IP الحقيقي وموقع الجهاز
+            try {
+                const response = await fetch("http://ip-api.com/json/");
+                const data = await response.json();
+                const realIP = data.query;
+                const city = data.city;
+                const region = data.regionName;
+                const country = data.country;
+
+                // عرض البيانات
+                deviceInfo.innerHTML = `
+                    <p><strong>عنوان الشبكة (IP):</strong> ${realIP}</p>
+                    <p><strong>المدينة:</strong> ${city}</p>
+                    <p><strong>المنطقة:</strong> ${region}</p>
+                    <p><strong>الدولة:</strong> ${country}</p>
+                    <p><strong>نظام التشغيل:</strong> ${platform}</p>
+                    <p><strong>لغة المتصفح:</strong> ${language}</p>
+                    <p><strong>المتصفح:</strong> ${userAgent}</p>
+                `;
+            } catch (error) {
+                deviceInfo.innerHTML = "<p>تعذر جلب معلومات الموقع أو IP.</p>";
+            }
+
+            // إظهار الرسالة النهائية فورًا
+            finalMessage.classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>
